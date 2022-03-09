@@ -30,7 +30,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="user : ${users}">
+							<tr th:each="user, iStat : ${userPage.content}"
+								th:style="${iStat.odd}? 'font-weight: bold;'"
+								th:alt-title="${iStat.even}? 'even' : 'odd'">
 								<td th:text="${user.name}"></td>
 								<td th:text="${user.email}"></td>
 								<td><a th:href="@{/edit/{id}(id=${user.id})}" class="btn btn-primary"><i
@@ -39,6 +41,31 @@
 											class="fas fa-user-times ml-2"></i></a></td>
 							</tr>
 						</tbody>
+
+						<tbody>
+							<tr>
+								<td th:if="${userPage.totalPages > 0}">
+									<a th:href="@{/index(size=${userPage.size}, page=1)}" th:text="First">
+									</a>
+								</td>
+								<td th:if="${userPage.totalPages > 0} and ${currentPage > 1}">
+									<a th:href="@{/index(size=${userPage.size}, page=${currentPage - 1})}"
+										th:text="Previous">
+									</a>
+								</td>
+								<td th:if="${userPage.totalPages > 0} and ${currentPage < userPage.totalPages}">
+									<a th:href="@{/index(size=${userPage.size}, page=${currentPage + 1})}"
+										th:text="Next">
+									</a>
+								</td>
+								<td th:if="${userPage.totalPages > 0}">
+									<a th:href="@{/index(size=${userPage.size}, page=${userPage.totalPages})}"
+										th:text="Last">
+									</a>
+								</td>
+							</tr>
+						</tbody>
+
 					</table>
 				</div>
 				<p class="my-5"><a href="/signup" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
