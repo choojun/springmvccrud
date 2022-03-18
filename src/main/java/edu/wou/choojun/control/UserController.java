@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -74,7 +76,7 @@ public class UserController
 	}
 
 	@PostMapping("/adduser")
-	public String addUser(User user, BindingResult result, Model model)
+	public String addUser(@Valid User user, BindingResult result, Model model)
 	{
 		if (result.hasErrors())
 		{
@@ -96,7 +98,7 @@ public class UserController
 	}
 
 	@PostMapping("/update/{id}")
-	public String updateUser(@PathVariable("id") long id, User user, BindingResult result, Model model)
+	public String updateUser(@PathVariable("id") long id, @Valid User user, BindingResult result, Model model)
 	{
 		if (result.hasErrors())
 		{
